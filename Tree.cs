@@ -1,21 +1,36 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Project_Genetic
 {
-    class Tree
+    class Tree:IComparable<Tree>
     {
         public Node Root { get; set; }
         private double x1;
-        private double MSE=double.PositiveInfinity;
+        public double MSE;
+        public Tree()
+        {
+            this.MSE=double.PositiveInfinity;
+        }
         public void CalculateMSE(){
-            double varince=0;
-            for (int i = Constants.MINRANGETEST; i <= Constants.MAXRANGETEST; i++)
+            double varince=0,eval;
+            int count=Convert.ToInt32((Constants.MAX_RANGE_TEST-Constants.MIN_RANGE_TEST)/Constants.STEP)+1;
+            int index=0;
+            for (double i = Constants.MIN_RANGE_TEST; i <= Constants.MAX_RANGE_TEST; i+=Constants.STEP,index++)
             {
-                varince+=Math.Pow(Evaluate(i)-Constants.RealFunction(i),2);
+                eval=Evaluate(i);
+                if(eval==Constants.ResultFunction[index]){
+                    continue;
+                }
+                if(!double.IsNormal(eval)){
+                    count--;
+                    continue;
+                }
+                varince+=Math.Pow(eval-Constants.ResultFunction[index],2);
             }
-            varince/=Constants.MAXRANGETEST-Constants.MAXRANGETEST;
+            varince/=count;
 
             MSE=varince;
         }
@@ -55,6 +70,19 @@ namespace Project_Genetic
             }
             return double.NaN;
         }
-        
+        public override string ToString(){
+            return recurText(Root);
+        }
+        private string recurText(Node node){
+            if(node.dataType!=DataType.OPERATOR) return node.Data;
+            else if(node.Right==null)
+                return "("+node.Data+"("+recurText(node.Left)+")"+")";
+            return "("+recurText(node.Left)+node.Data+recurText(node.Right)+")";
+        }
+
+        public int CompareTo(Tree? other)
+        {
+            return this.MSE.CompareTo(other.MSE);
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace Project_Genetic
         public string Data { get; set; }
         public Node Right { get; set; }
         public Node Left { get; set; }
+        
         public DataType dataType { get; set; } 
     }
 }

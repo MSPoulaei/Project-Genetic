@@ -10,12 +10,12 @@ namespace Project_Genetic
         public double randomDouble(){
             double daraje=random.NextDouble();// 0.0 - 1.0
             int randomNumber=random.Next(Constants.MINVALUE,Constants.MAXVALUE);
-            return daraje*randomNumber;
+            return Math.Round(daraje*randomNumber,1);
         }
         public string randomOperator(){
             return Constants.OPERATORS[random.Next(Constants.OPERATORS.Length)];
         }
-
+        
 
     }
 }

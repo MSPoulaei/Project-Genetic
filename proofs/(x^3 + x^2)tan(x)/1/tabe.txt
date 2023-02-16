@@ -1,0 +1,6 @@
+creating first generation(100000 trees)
+first generation created successfully
+Genetic iterations started! number of iterations:100
+10% done!
+00:02:32.1222028
+1th:(((sin(x))*((x/x)/(cos((x-(x+x))))))*((x*x)+(x^3))) 7.047430129903837E-19
